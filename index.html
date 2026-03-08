@@ -4,48 +4,110 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>متجر الرتب الملكي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --gold: #d4af37;
-            --dark-red: #8b0000;
-            --bright-red: #ff0000;
+            /* درجة ذهبي ملكي أعمق */
+            --gold: #c5a059; 
+            --dark-gold: #8e6d2f;
+            --dark-red: #4a0000;
+            --black-bg: #0d0d0d;
         }
+
         body {
             margin: 0;
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-            background-color: #0b0b0b;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+            /* تلوين الصفحة كاملة بتدرج ملكي */
+            background: radial-gradient(circle, var(--dark-red) 0%, var(--black-bg) 100%);
             color: white;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
+            overflow: hidden;
         }
+
         .container {
             text-align: center;
-            border: 2px solid var(--gold);
-            padding: 50px;
-            background: linear-gradient(145deg, #1a1a1a, var(--dark-red));
-            border-radius: 20px;
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+            /* جعل الحاوية بدون حدود بيضاء، فقط وهج ذهبي */
+            padding: 60px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--gold);
+            border-radius: 30px;
+            box-shadow: 0 0 30px rgba(197, 160, 89, 0.2);
+            backdrop-filter: blur(10px);
         }
-        h1 { color: var(--gold); font-size: 2.5em; text-shadow: 2px 2px 4px #000; }
-        .logo { width: 150px; margin-bottom: 20px; border-radius: 50%; border: 3px solid var(--gold); }
-        .btn-group { display: flex; gap: 20px; margin-top: 30px; justify-content: center; }
+
+        h1 { 
+            color: var(--gold); 
+            font-size: 3em; 
+            font-weight: 900;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        p {
+            font-size: 1.2em;
+            color: #e0e0e0;
+            margin-bottom: 40px;
+        }
+
+        .logo { 
+            width: 160px; 
+            margin-bottom: 25px; 
+            border-radius: 50%; 
+            border: 4px solid var(--gold); 
+            box-shadow: 0 0 15px var(--gold);
+        }
+
+        .btn-group { 
+            display: flex; 
+            flex-direction: column; /* توزيع الازرار بشكل عمودي يعطي فخامة أكثر */
+            gap: 15px; 
+            align-items: center;
+        }
+
         .btn {
-            padding: 12px 30px;
-            font-size: 1.1em;
+            padding: 14px 50px;
+            font-size: 1.2em;
             cursor: pointer;
-            border: none;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: 0.3s;
+            border-radius: 50px;
+            font-weight: 700;
+            transition: all 0.4s ease;
             text-decoration: none;
+            width: 200px;
+            text-align: center;
         }
-        .btn-buy { background-color: var(--gold); color: #000; }
-        .btn-buy:hover { background-color: #fff; box-shadow: 0 0 15px var(--gold); }
-        .btn-admin { background-color: transparent; color: var(--gold); border: 1px solid var(--gold); }
-        .btn-admin:hover { background-color: var(--gold); color: #000; }
+
+        /* زر شراء الرتب: ذهبي كامل */
+        .btn-buy { 
+            background: linear-gradient(45deg, var(--gold), var(--dark-gold));
+            color: #2e1a05; 
+            border: none;
+            box-shadow: 0 4px 15px rgba(197, 160, 89, 0.4);
+        }
+        
+        .btn-buy:hover { 
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px var(--gold);
+            filter: brightness(1.1);
+        }
+
+        /* زر خاص بالادمن: شفاف بحدود ذهبية */
+        .btn-admin { 
+            background-color: transparent; 
+            color: var(--gold); 
+            border: 2px solid var(--gold); 
+        }
+
+        .btn-admin:hover { 
+            background-color: rgba(197, 160, 89, 0.1);
+            color: #fff;
+            border-color: #fff;
+        }
     </style>
 </head>
 <body>
@@ -63,11 +125,11 @@
 
     <script>
         function checkAdmin() {
-            let pass = prompt("الرجاء إدخال كلمة السر:");
-            if (pass === "1234") { // غير كلمة السر من هنا
+            let pass = prompt("الرجاء إدخال كلمة السر الخاصة بالإدارة:");
+            if (pass === "1234") { 
                 window.location.href = "admin.html";
             } else {
-                alert("كلمة سر خاطئة!");
+                alert("كلمة سر خاطئة! الدخول للمخولين فقط.");
             }
         }
     </script>

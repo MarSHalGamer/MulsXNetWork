@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>لوحة التحكم - الإدارة</title>
+    <style>
+        :root { --gold: #d4af37; --red: #8b0000; --dark: #0b0b0b; }
+        body { background: var(--dark); color: white; font-family: 'Segoe UI', sans-serif; text-align: center; padding: 40px; }
+        
+        .header-admin { border-bottom: 2px solid var(--gold); padding-bottom: 20px; margin-bottom: 30px; }
+        
+        /* زر فتح نموذج الإضافة */
+        .open-btn {
+            background: var(--red); color: white; border: 2px solid var(--gold);
+            padding: 15px 40px; font-size: 1.2rem; cursor: pointer; border-radius: 8px;
+            transition: 0.3s; font-weight: bold;
+        }
+        .open-btn:hover { background: var(--gold); color: black; }
+
+        /* حاوية حقول الإضافة (مخفية في البداية) */
+        #addSection {
+            display: none; margin: 30px auto; background: #1a1a1a;
+            padding: 30px; border-radius: 15px; border: 1px solid var(--gold);
+            max-width: 400px; box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
+        }
+
+        input {
+            display: block; width: 90%; margin: 15px auto; padding: 12px;
+            border-radius: 5px; border: 1px solid #444; background: #000; color: white;
+            font-size: 1rem; text-align: center;
+        }
+        input:focus { border-color: var(--gold); outline: none; }
+
+        .save-btn {
+            background: var(--gold); color: black; width: 100%;
+            padding: 12px; border: none; cursor: pointer; font-weight: bold;
+            border-radius: 5px; font-size: 1.1rem;
+        }
+        .status-msg { margin-top: 15px; color: var(--gold); font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <div class="header-admin">
+        <h1 style="color: var(--gold);">لوحة إدارة الرتب</h1>
+        <p>مرحباً بك أيها المسؤول</p>
+    </div>
+
+    <button class="open-btn" onclick="toggleAddSection()">➕ إضافة رتبة وسعر جديد</button>
+
+    <div id="addSection">
+        <h3 style="margin-top:0;">بيانات الرتبة الجديدة</h3>
+        <input type="text" id="rankName" placeholder="اسم الرتبة (مثلاً: VIP)">
+        <input type="number" id="rankPrice" placeholder="السعر (مثلاً: 50)">
+        <p style="font-size: 0.8rem; color: #aaa;">اختر صورة الرتبة:</p>
+        <input type="file" id="rankImg" accept="image/*">
+        
+        <button class="save-btn" onclick="saveData()">حفظ ونشر الرتبة</button>
+        <div id="status" class="status-msg"></div>
+    </div>
+
+    <br><br>
+    <a href="index.html" style="color: #777; text-decoration: none;">⇠ خروج والعودة للرئيسية</a>
+
+    <script>
+        // --- ضع بياناتك هنا ---
+        const BIN_ID = 'ضع_هنا_BIN_ID';
+        const MASTER_KEY = 'ضع_هنا_MASTER_KEY';
+
+        // وظيفة لإظهار/إخفاء قسم الإضافة
+        function toggleAddSection() {
+            const section = document.getElementById('addSection');
+            section.style.display = (section.style.display === "block") ? "none" : "block";
+        }
+
+        async function saveData() {
+            const name = document.getElementById('rankName').value;
+            const price = document.getElementById('rankPrice').value;
+            const fileInput = document.getElementById('rankImg');
+            const status = document.getElementById('status');
+
+            if (!name || !price || !fileInput.files[0]) {
+                alert("أكمل جميع الحقول أولاً!");
+                return;
+            }
+
+            status.innerText = "⏳ جاري معالجة الصورة والرفع...";
+
+            const reader = new FileReader();
+            reader.readAsDataURL(fileInput.files[0]);
+            reader.onload = async () => {
+                const imgBase64 = reader.result;
+                const newEntry = { name, price, image: imgBase64 };
+
+                try {
+                    // جلب البيانات الحالية
+                    const getRes = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+                        headers: { 'X-Master-Key': MASTER_KEY }
+                    });
+                    const currentJson = await getRes.json();
+                    let updatedRanks = currentJson.record.ranks || [];
+
+                    // إضافة الرتبة الجديدة
+                    updatedRanks.push(newEntry);
+
+                    // تحديث السحابة
+                    const putRes = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Master-Key': MASTER_KEY
+                        },
+                        body: JSON.stringify({ ranks: updatedRanks })
+                    });
+
+                    if (putRes.ok) {
+                        status.innerText = "✅ تمت الإضافة بنجاح!";
+                        // تفريغ الحقول وإخفاء القائمة
+                        setTimeout(() => {
+                            document.getElementById('rankName').value = "";
+                            document.getElementById('rankPrice').value = "";
+                            toggleAddSection();
+                            status.innerText = "";
+                        }, 2000);
+                    }
+                } catch (error) {
+                    status.innerText = "❌ حدث خطأ في الاتصال بالسحابة";
+                }
+            };
+        }
+    </script>
+</body>
+</html>

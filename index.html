@@ -7,19 +7,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* درجة ذهبي ملكي أعمق */
-            --gold: #c5a059; 
-            --dark-gold: #8e6d2f;
-            --dark-red: #4a0000;
-            --black-bg: #0d0d0d;
+            /* استخلاص الألوان من الشعار بدقة */
+            --logo-red-bright: #ff3e3e; /* اللون الأحمر الفاتح في حرف M */
+            --logo-red-dark: #b80000;   /* اللون الأحمر الغامق في حرف M */
+            --logo-gold: #fcc201;       /* اللون الذهبي في الهلال والسيف */
+            --logo-dark-gold: #c69c3a;  /* لون ذهبي أعمق للحدود */
+            --black-bg: #000000;       /* خلفية سوداء خالصة */
         }
 
         body {
             margin: 0;
             padding: 0;
             font-family: 'Cairo', sans-serif;
-            /* تلوين الصفحة كاملة بتدرج ملكي */
-            background: radial-gradient(circle, var(--dark-red) 0%, var(--black-bg) 100%);
+            /* خلفية سوداء خالصة لإبراز ألوان الشعار الصارخة */
+            background-color: var(--black-bg);
             color: white;
             display: flex;
             flex-direction: column;
@@ -29,82 +30,63 @@
             overflow: hidden;
         }
 
-        .container {
-            text-align: center;
-            /* جعل الحاوية بدون حدود بيضاء، فقط وهج ذهبي */
-            padding: 60px;
-            background: rgba(0, 0, 0, 0.6);
-            border: 1px solid var(--gold);
-            border-radius: 30px;
-            box-shadow: 0 0 30px rgba(197, 160, 89, 0.2);
-            backdrop-filter: blur(10px);
-        }
-
-        h1 { 
-            color: var(--gold); 
-            font-size: 3em; 
-            font-weight: 900;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
-            margin-bottom: 10px;
-            letter-spacing: 1px;
-        }
-
-        p {
-            font-size: 1.2em;
-            color: #e0e0e0;
-            margin-bottom: 40px;
+        /* حاوية الشعار للتحكم في حجمه وتظهيره */
+        .logo-wrapper {
+            margin-bottom: 50px;
+            /* إضافة وهج خفيف خلف الشعار لإبرازه */
+            filter: drop-shadow(0 0 15px rgba(255, 62, 62, 0.3));
         }
 
         .logo { 
-            width: 160px; 
-            margin-bottom: 25px; 
-            border-radius: 50%; 
-            border: 4px solid var(--gold); 
-            box-shadow: 0 0 15px var(--gold);
+            width: 250px; /* حجم الشعار */
+            height: auto;
         }
 
+        /* إزالة الحاوية الوسطى وجعل الأزرار عائمة */
         .btn-group { 
             display: flex; 
-            flex-direction: column; /* توزيع الازرار بشكل عمودي يعطي فخامة أكثر */
-            gap: 15px; 
+            flex-direction: column; 
+            gap: 20px; 
             align-items: center;
         }
 
         .btn {
-            padding: 14px 50px;
-            font-size: 1.2em;
+            padding: 16px 60px;
+            font-size: 1.3em;
             cursor: pointer;
-            border-radius: 50px;
+            border-radius: 50px; /* ازرار بيضاوية عصرية */
             font-weight: 700;
             transition: all 0.4s ease;
             text-decoration: none;
-            width: 200px;
+            width: 220px;
             text-align: center;
+            box-sizing: border-box; /* لضمان دقة العرض */
         }
 
-        /* زر شراء الرتب: ذهبي كامل */
+        /* زر شراء الرتب: مستوحى من تدرج اللون الأحمر في حرف M */
         .btn-buy { 
-            background: linear-gradient(45deg, var(--gold), var(--dark-gold));
-            color: #2e1a05; 
+            background: linear-gradient(45deg, var(--logo-red-dark), var(--logo-red-bright));
+            color: #fff; 
             border: none;
-            box-shadow: 0 4px 15px rgba(197, 160, 89, 0.4);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+            box-shadow: 0 5px 15px rgba(184, 0, 0, 0.4);
         }
         
         .btn-buy:hover { 
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px var(--gold);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(255, 62, 62, 0.6);
             filter: brightness(1.1);
         }
 
-        /* زر خاص بالادمن: شفاف بحدود ذهبية */
+        /* زر خاص بالادمن: شفاف بحدود ذهبية مستوحاة من السيف والهلال */
         .btn-admin { 
             background-color: transparent; 
-            color: var(--gold); 
-            border: 2px solid var(--gold); 
+            color: var(--logo-gold); 
+            border: 3px solid var(--logo-gold); 
         }
 
         .btn-admin:hover { 
-            background-color: rgba(197, 160, 89, 0.1);
+            background-color: rgba(252, 194, 1, 0.1); /* تأثير خلفية ذهبية خفيفة عند المرور */
             color: #fff;
             border-color: #fff;
         }
@@ -112,24 +94,22 @@
 </head>
 <body>
 
-    <div class="container">
-        <img src="logo.png" alt="الشعار" class="logo"> 
-        <h1>لوحة التحكم الملكية</h1>
-        <p>مرحباً بك في عالم التميز</p>
+    <div class="logo-wrapper">
+        <img src="logo.png" alt="شعار المتجر" class="logo"> 
+    </div>
 
-        <div class="btn-group">
-            <a href="prices.html" class="btn btn-buy">شراء رتب</a>
-            <button onclick="checkAdmin()" class="btn btn-admin">خاص بالادمنز</button>
-        </div>
+    <div class="btn-group">
+        <a href="prices.html" class="btn btn-buy">شراء رتب</a>
+        <button onclick="checkAdmin()" class="btn btn-admin">خاص بالادمنز</button>
     </div>
 
     <script>
         function checkAdmin() {
-            let pass = prompt("الرجاء إدخال كلمة السر الخاصة بالإدارة:");
+            let pass = prompt("الرجاء إدخال كلمة السر:");
             if (pass === "1234") { 
                 window.location.href = "admin.html";
             } else {
-                alert("كلمة سر خاطئة! الدخول للمخولين فقط.");
+                alert("كلمة سر خاطئة!");
             }
         }
     </script>

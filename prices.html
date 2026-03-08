@@ -2,24 +2,144 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>شراء الرتب</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجر الرتب الملكي - شراء الرتب</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #d4af37; --red: #8b0000; }
-        body { background: #0b0b0b; color: white; font-family: sans-serif; text-align: center; padding: 20px; }
-        .grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 30px; }
-        .card { border: 1px solid var(--gold); background: #1a1a1a; padding: 20px; border-radius: 10px; width: 200px; transition: 0.3s; }
-        .card:hover { transform: translateY(-10px); box-shadow: 0 0 15px var(--gold); }
-        .card img { width: 100%; height: 150px; object-fit: cover; border-radius: 5px; border-bottom: 2px solid var(--gold); }
-        .card h3 { color: var(--gold); margin: 15px 0 5px; }
-        .card p { font-weight: bold; font-size: 1.2em; }
+        :root {
+            --gold: #c5a059; 
+            --dark-gold: #8e6d2f;
+            --red: #4a0000;
+            --bright-red: #8b0000;
+            --dark: #0d0d0d;
+        }
+
+        body { 
+            background: radial-gradient(circle, var(--red) 0%, var(--dark) 100%);
+            color: white; 
+            font-family: 'Cairo', sans-serif; 
+            text-align: center; 
+            padding: 40px 20px; 
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        h1 { 
+            color: var(--gold); 
+            font-weight: 900; 
+            font-size: 2.5rem;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #ddd;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+
+        .grid { 
+            display: flex; 
+            flex-wrap: wrap; 
+            justify-content: center; 
+            gap: 25px; 
+            margin-top: 20px; 
+        }
+
+        /* تصميم كرت الرتبة الفخم */
+        .card { 
+            background: rgba(26, 26, 26, 0.8);
+            border: 1px solid var(--gold); 
+            padding: 15px; 
+            border-radius: 20px; 
+            width: 260px; 
+            transition: all 0.4s ease; 
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .card:hover { 
+            transform: translateY(-15px); 
+            box-shadow: 0 15px 30px rgba(197, 160, 89, 0.3);
+            border-color: #fff;
+        }
+
+        .card img { 
+            width: 100%; 
+            height: 180px; 
+            object-fit: cover; 
+            border-radius: 15px; 
+            border-bottom: 3px solid var(--gold); 
+            transition: 0.3s;
+        }
+
+        .card h3 { 
+            color: var(--gold); 
+            margin: 20px 0 10px; 
+            font-size: 1.6rem;
+            font-weight: 900;
+        }
+
+        .card p { 
+            font-weight: 700; 
+            font-size: 1.4rem; 
+            margin: 0 0 20px;
+            color: #fff;
+        }
+
+        /* زر الشراء الملكي */
+        .buy-btn {
+            width: 100%; 
+            background: linear-gradient(45deg, var(--gold), var(--dark-gold));
+            color: #2e1a05; 
+            border: none; 
+            padding: 12px; 
+            cursor: pointer;
+            font-weight: 900;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.1rem;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        .buy-btn:hover {
+            filter: brightness(1.2);
+            letter-spacing: 1px;
+        }
+
+        .back-home {
+            display: inline-block;
+            margin-top: 50px;
+            color: #aaa;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .back-home:hover { color: var(--gold); }
+
+        /* رسالة التحميل */
+        #status-msg {
+            font-size: 1.2rem;
+            color: var(--gold);
+            margin-top: 50px;
+        }
     </style>
 </head>
 <body>
-    <h1 style="color: var(--gold);">قائمة الرتب المتاحة</h1>
-    <div id="ranksGrid" class="grid">جاري تحميل الرتب...</div>
+
+    <h1>قائمة الرتب المتاحة</h1>
+    <p class="subtitle">اختر رتبتك الآن وانضم إلى صفوة اللاعبين</p>
+
+    <div id="ranksGrid" class="grid">
+        <div id="status-msg">⏳ جاري تحميل الرتب الملكية...</div>
+    </div>
+
+    <a href="index.html" class="back-home">⇠ العودة للصفحة الرئيسية</a>
 
     <script>
-        // --- بيانات السحابة (يجب أن تكون نفس التي في صفحة الآدمن) ---
+        // --- بيانات السحابة (تم الحفاظ عليها) ---
         const BIN_ID = '69ada3a2d0ea881f40fcecda';
         const MASTER_KEY = '$2a$10$EVJpa1kkUQx4JG6CPhwT8eMpLADFaWQc7iR5SShpZRDJSGC2sThvi';
 
@@ -31,22 +151,33 @@
                 const result = await response.json();
                 const ranks = result.record.ranks || [];
                 const grid = document.getElementById('ranksGrid');
+                
+                if (ranks.length === 0) {
+                    grid.innerHTML = "<p>لا توجد رتب معروضة حالياً.</p>";
+                    return;
+                }
+
                 grid.innerHTML = "";
 
                 ranks.forEach(rank => {
                     grid.innerHTML += `
                         <div class="card">
-                            <img src="${rank.image}" alt="Rank Image">
+                            <img src="${rank.image}" alt="${rank.name}">
                             <h3>${rank.name}</h3>
                             <p>${rank.price} ريال</p>
-                            <button style="width:100%; background:var(--red); color:white; border:none; padding:5px; cursor:pointer;">شراء الآن</button>
+                            <button class="buy-btn" onclick="orderRank('${rank.name}')">شراء الآن</button>
                         </div>
                     `;
                 });
             } catch (err) {
-                document.getElementById('ranksGrid').innerText = "خطأ في تحميل البيانات";
+                document.getElementById('ranksGrid').innerHTML = "<p>❌ عذراً، تعذر تحميل الرتب حالياً.</p>";
             }
         }
+
+        function orderRank(name) {
+            alert("لقد اخترت شراء رتبة: " + name + "\nسيتم توجيهك لإتمام العملية قريباً.");
+        }
+
         loadRanks();
     </script>
 </body>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إضافة رتبة - سريعة</title>
+    <title>إضافة رتبة - نصية</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -13,102 +13,82 @@
             --black-bg: #000000;
         }
         body { background-color: var(--black-bg); color: white; font-family: 'Cairo', sans-serif; text-align: center; padding: 40px 20px; margin: 0; }
-        .form-container { margin: 50px auto; background: rgba(20, 20, 20, 0.95); padding: 40px; border-radius: 30px; border: 2px solid var(--logo-gold); max-width: 450px; }
-        input { display: block; width: 100%; margin: 15px 0; padding: 15px; border-radius: 12px; border: 1px solid #333; background: #000; color: white; text-align: center; font-family: 'Cairo', sans-serif; box-sizing: border-box; }
-        .save-btn { background: var(--logo-gold); color: black; width: 100%; padding: 15px; border: none; cursor: pointer; font-weight: 900; border-radius: 12px; font-size: 1.2rem; transition: 0.3s; }
+        .form-container { margin: 50px auto; background: rgba(20, 20, 20, 0.95); padding: 40px; border-radius: 30px; border: 2px solid var(--logo-gold); max-width: 450px; box-shadow: 0 0 20px rgba(252, 194, 1, 0.1); }
+        input { display: block; width: 100%; margin: 15px 0; padding: 15px; border-radius: 12px; border: 1px solid #333; background: #000; color: white; text-align: center; font-family: 'Cairo', sans-serif; box-sizing: border-box; font-size: 1.1rem; }
+        input:focus { border-color: var(--logo-red-bright); outline: none; }
+        .save-btn { background: var(--logo-gold); color: black; width: 100%; padding: 15px; border: none; cursor: pointer; font-weight: 900; border-radius: 12px; font-size: 1.2rem; transition: 0.3s; margin-top: 10px; }
+        .save-btn:hover { background: white; transform: scale(1.02); }
         .save-btn:disabled { background: #555; cursor: not-allowed; }
         .status-msg { margin-top: 20px; color: var(--logo-gold); font-weight: bold; }
-        .back-link { display: inline-block; margin-top: 30px; color: #555; text-decoration: none; }
+        .back-link { display: inline-block; margin-top: 30px; color: #555; text-decoration: none; transition: 0.3s; }
+        .back-link:hover { color: var(--logo-gold); }
     </style>
 </head>
 <body>
 
     <div class="form-container">
-        <h2 style="color: var(--logo-gold);">إضافة رتبة (رفع سريع)</h2>
+        <h2 style="color: var(--logo-gold); margin-bottom: 30px;">إضافة رتبة جديدة</h2>
         
-        <input type="text" id="rankName" placeholder="اسم الرتبة">
+        <input type="text" id="rankName" placeholder="اسم الرتبة (مثلاً: VIP)">
         <input type="number" id="rankPrice" placeholder="السعر بالريال">
         
-        <p style="color: #888; font-size: 0.9rem;">اختر صورة الرتبة (سيتم ضغطها تلقائياً):</p>
-        <input type="file" id="rankImg" accept="image/*">
-        
-        <button id="submitBtn" class="save-btn" onclick="processAndSave()">نشر الرتبة الآن</button>
+        <button id="submitBtn" class="save-btn" onclick="saveRankOnly()">نشر الرتبة الآن</button>
         <div id="status" class="status-msg"></div>
         
         <a href="admin.html" class="back-link">⇠ العودة للوحة الإدارة</a>
     </div>
 
     <script>
+        // الروابط الجديدة التي أرفقتها
         const BIN_ID = '69ade71aae596e708f6dff7c';
         const MASTER_KEY = '$2a$10$Jf/BiNPPOdt.TS.NNvTT4ulP.k61hphv8OM/8yArTGHP5F.MU/FSq';
 
-        // وظيفة لضغط الصورة قبل الرفع
-        async function compressImage(file) {
-            return new Promise((resolve) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = (event) => {
-                    const img = new Image();
-                    img.src = event.target.result;
-                    img.onload = () => {
-                        const canvas = document.createElement('canvas');
-                        const MAX_WIDTH = 400; // تصغير العرض لسرعة الرفع
-                        const scaleSize = MAX_WIDTH / img.width;
-                        canvas.width = MAX_WIDTH;
-                        canvas.height = img.height * scaleSize;
-
-                        const ctx = canvas.getContext('canvas');
-                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                        
-                        // تصدير الصورة بجودة متوسطة لتقليل الحجم جداً
-                        resolve(canvas.toDataURL('image/jpeg', 0.6)); 
-                    };
-                };
-            });
-        }
-
-        async function processAndSave() {
+        async function saveRankOnly() {
             const name = document.getElementById('rankName').value;
             const price = document.getElementById('rankPrice').value;
-            const fileInput = document.getElementById('rankImg');
             const status = document.getElementById('status');
             const btn = document.getElementById('submitBtn');
 
-            if (!name || !price || !fileInput.files[0]) {
-                alert("يرجى إكمال الحقول!"); return;
+            if (!name || !price) {
+                alert("يرجى إدخال الاسم والسعر!"); 
+                return;
             }
 
             btn.disabled = true;
-            status.innerText = "⏳ جاري ضغط الصورة والرفع السريع...";
+            status.innerText = "⏳ جاري النشر...";
 
             try {
-                // ضغط الصورة أولاً
-                const compressedBase64 = await compressImage(fileInput.files[0]);
-                const newEntry = { name, price, image: compressedBase64 };
-
-                // جلب البيانات الحالية
+                // 1. جلب البيانات الحالية
                 const getRes = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
                     headers: { 'X-Master-Key': MASTER_KEY }
                 });
                 const currentJson = await getRes.json();
                 let updatedRanks = currentJson.record.ranks || [];
+
+                // 2. إضافة الرتبة (بدون حقل الصورة)
+                const newEntry = { name, price };
                 updatedRanks.push(newEntry);
 
-                // رفع البيانات المضغوطة
+                // 3. تحديث السحابة
                 const putRes = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
                     method: 'PUT',
-                    headers: { 'Content-Type': 'application/json', 'X-Master-Key': MASTER_KEY },
+                    headers: { 
+                        'Content-Type': 'application/json', 
+                        'X-Master-Key': MASTER_KEY 
+                    },
                     body: JSON.stringify({ ranks: updatedRanks })
                 });
 
                 if (putRes.ok) {
-                    status.innerText = "✅ تم النشر بنجاح فائق!";
-                    setTimeout(() => { window.location.href = "admin.html"; }, 1500);
+                    status.innerText = "✅ تم النشر بنجاح!";
+                    setTimeout(() => { 
+                        window.location.href = "admin.html"; 
+                    }, 1500);
                 } else {
-                    throw new Error("فشل الرفع");
+                    throw new Error();
                 }
             } catch (error) {
-                status.innerText = "❌ فشل الرفع (حاول تصغير الصورة يدوياً)";
+                status.innerText = "❌ فشل في الاتصال بالسحابة";
                 btn.disabled = false;
             }
         }

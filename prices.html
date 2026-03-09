@@ -149,8 +149,6 @@
     <script>
         const BIN_ID = '69ade71aae596e708f6dff7c';
         const MASTER_KEY = '$2a$10$Jf/BiNPPOdt.TS.NNvTT4ulP.k61hphv8OM/8yArTGHP5F.MU/FSq';
-        
-        // --- ضع رابطك هنا ليتم التحويل إليه عند الضغط على الزر ---
         const MY_PURCHASE_LINK = "https://discord.gg/sEdrrd2TJY"; 
 
         async function loadRanks() {
@@ -159,6 +157,9 @@
                     headers: { 'X-Master-Key': MASTER_KEY }
                 });
                 const result = await response.json();
+                
+                // جلب العملة من الإعدادات أو استخدام "ريال" كافتراضي
+                const currency = result.record.settings?.currency || "ريال";
                 const ranks = result.record.ranks || [];
                 const grid = document.getElementById('ranksGrid');
                 
@@ -173,7 +174,7 @@
                     grid.innerHTML += `
                         <div class="card">
                             <h3>${rank.name}</h3>
-                            <div class="price-tag">${rank.price} ريال</div>
+                            <div class="price-tag">${rank.price} ${currency}</div>
                             <button class="buy-btn" onclick="orderRank()">امتلكها الآن</button>
                         </div>
                     `;
@@ -183,7 +184,6 @@
             }
         }
 
-        // الوظيفة المعدلة للتحويل إلى الرابط
         function orderRank() {
             window.location.href = MY_PURCHASE_LINK;
         }

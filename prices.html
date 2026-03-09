@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر الرتب الملكي - شراء الرتب</title>
+    <title>متجر الرتب - 𝐌𝐮𝐥𝐬𝐗 𝐍𝐞𝐭𝐖𝐨𝐫𝐤</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --gold: #c5a059; 
-            --dark-gold: #8e6d2f;
-            --red: #4a0000;
-            --bright-red: #8b0000;
-            --dark: #0d0d0d;
+            --gold: #fcc201; 
+            --dark-gold: #c69c3a;
+            --red: #ff3e3e;
+            --dark-red: #1a0000;
+            --black: #000000;
         }
 
         body { 
-            background: radial-gradient(circle, var(--red) 0%, var(--dark) 100%);
+            background: radial-gradient(circle at center, var(--dark-red) 0%, var(--black) 100%);
             color: white; 
             font-family: 'Cairo', sans-serif; 
             text-align: center; 
@@ -28,13 +28,13 @@
             color: var(--gold); 
             font-weight: 900; 
             font-size: 2.5rem;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
-            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(252, 194, 1, 0.4);
+            margin-bottom: 5px;
         }
 
         .subtitle {
-            color: #ddd;
-            margin-bottom: 40px;
+            color: #aaa;
+            margin-bottom: 50px;
             font-size: 1.1rem;
         }
 
@@ -42,84 +42,94 @@
             display: flex; 
             flex-wrap: wrap; 
             justify-content: center; 
-            gap: 25px; 
+            gap: 30px; 
             margin-top: 20px; 
         }
 
-        /* تصميم كرت الرتبة الفخم */
+        /* تصميم الكرت بدون صورة - تركيز على النص */
         .card { 
-            background: rgba(26, 26, 26, 0.8);
-            border: 1px solid var(--gold); 
-            padding: 15px; 
-            border-radius: 20px; 
-            width: 260px; 
-            transition: all 0.4s ease; 
-            backdrop-filter: blur(10px);
+            background: rgba(15, 15, 15, 0.8);
+            border: 2px solid var(--gold); 
+            padding: 30px 20px; 
+            border-radius: 25px; 
+            width: 280px; 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            backdrop-filter: blur(15px);
             position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .card:hover { 
-            transform: translateY(-15px); 
-            box-shadow: 0 15px 30px rgba(197, 160, 89, 0.3);
+            transform: translateY(-10px); 
+            box-shadow: 0 15px 40px rgba(252, 194, 1, 0.2);
             border-color: #fff;
         }
 
-        .card img { 
-            width: 100%; 
-            height: 180px; 
-            object-fit: cover; 
-            border-radius: 15px; 
-            border-bottom: 3px solid var(--gold); 
-            transition: 0.3s;
+        /* زخرفة علوية للكرت */
+        .card::before {
+            content: "RANK";
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gold);
+            color: black;
+            padding: 2px 15px;
+            font-size: 12px;
+            font-weight: 900;
+            border-radius: 5px;
         }
 
         .card h3 { 
-            color: var(--gold); 
-            margin: 20px 0 10px; 
-            font-size: 1.6rem;
+            color: white; 
+            margin: 10px 0; 
+            font-size: 2rem;
             font-weight: 900;
+            letter-spacing: 1px;
         }
 
-        .card p { 
+        .price-tag { 
             font-weight: 700; 
-            font-size: 1.4rem; 
-            margin: 0 0 20px;
-            color: #fff;
+            font-size: 1.6rem; 
+            margin-bottom: 25px;
+            color: var(--gold);
         }
 
-        /* زر الشراء الملكي */
         .buy-btn {
             width: 100%; 
             background: linear-gradient(45deg, var(--gold), var(--dark-gold));
-            color: #2e1a05; 
+            color: #000; 
             border: none; 
-            padding: 12px; 
+            padding: 14px; 
             cursor: pointer;
             font-weight: 900;
             font-family: 'Cairo', sans-serif;
-            font-size: 1.1rem;
-            border-radius: 10px;
+            font-size: 1.2rem;
+            border-radius: 15px;
             transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(252, 194, 1, 0.3);
         }
 
         .buy-btn:hover {
+            transform: scale(1.05);
             filter: brightness(1.2);
-            letter-spacing: 1px;
+            box-shadow: 0 8px 20px var(--gold);
         }
 
         .back-home {
             display: inline-block;
-            margin-top: 50px;
-            color: #aaa;
+            margin-top: 60px;
+            color: #666;
             text-decoration: none;
+            font-weight: bold;
             transition: 0.3s;
         }
 
         .back-home:hover { color: var(--gold); }
 
-        /* رسالة التحميل */
         #status-msg {
             font-size: 1.2rem;
             color: var(--gold);
@@ -129,17 +139,16 @@
 </head>
 <body>
 
-    <h1>قائمة الرتب المتاحة</h1>
-    <p class="subtitle">اختر رتبتك الآن وانضم إلى صفوة اللاعبين</p>
+    <h1>متجر الرتب</h1>
+    <p class="subtitle">استمتع بمميزات حصرية داخل سيرفر 𝐌𝐮𝐥𝐬𝐗 𝐍𝐞𝐭𝐖𝐨𝐫𝐤</p>
 
     <div id="ranksGrid" class="grid">
-        <div id="status-msg">⏳ جاري تحميل الرتب الملكية...</div>
+        <div id="status-msg">⏳ جاري جلب الرتب المتاحة...</div>
     </div>
 
-    <a href="index.html" class="back-home">⇠ العودة للصفحة الرئيسية</a>
+    <a href="index.html" class="back-home">⇠ العودة للرئيسية</a>
 
     <script>
-        // --- بيانات السحابة (تم الحفاظ عليها) ---
         const BIN_ID = '69ade71aae596e708f6dff7c';
         const MASTER_KEY = '$2a$10$Jf/BiNPPOdt.TS.NNvTT4ulP.k61hphv8OM/8yArTGHP5F.MU/FSq';
 
@@ -153,7 +162,7 @@
                 const grid = document.getElementById('ranksGrid');
                 
                 if (ranks.length === 0) {
-                    grid.innerHTML = "<p>لا توجد رتب معروضة حالياً.</p>";
+                    grid.innerHTML = "<p style='color:#888;'>لا توجد رتب معروضة حالياً.</p>";
                     return;
                 }
 
@@ -162,23 +171,22 @@
                 ranks.forEach(rank => {
                     grid.innerHTML += `
                         <div class="card">
-                            <img src="${rank.image}" alt="${rank.name}">
                             <h3>${rank.name}</h3>
-                            <p>${rank.price} ريال</p>
-                            <button class="buy-btn" onclick="orderRank('${rank.name}')">شراء الآن</button>
+                            <div class="price-tag">${rank.price} ريال</div>
+                            <button class="buy-btn" onclick="orderRank('${rank.name}')">امتلكها الآن</button>
                         </div>
                     `;
                 });
             } catch (err) {
-                document.getElementById('ranksGrid').innerHTML = "<p>❌ عذراً، تعذر تحميل الرتب حالياً.</p>";
+                document.getElementById('ranksGrid').innerHTML = "<p>❌ فشل تحميل الرتب، تأكد من الاتصال.</p>";
             }
         }
 
         function orderRank(name) {
-            alert("لقد اخترت شراء رتبة: " + name + "\nسيتم توجيهك لإتمام العملية قريباً.");
+            alert("طلب شراء: " + name + "\nيرجى التواصل مع الإدارة عبر الديسكورد لإتمام الدفع.");
         }
 
-        loadRanks();
+        window.onload = loadRanks;
     </script>
 </body>
 </html>

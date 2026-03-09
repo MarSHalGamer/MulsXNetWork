@@ -29,7 +29,6 @@
         const MASTER_KEY = '$2a$10$Jf/BiNPPOdt.TS.NNvTT4ulP.k61hphv8OM/8yArTGHP5F.MU/FSq';
         let currentData = {};
 
-        // جلب البيانات الحالية عند فتح الصفحة
         async function loadSettings() {
             try {
                 const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
@@ -37,7 +36,6 @@
                 });
                 const result = await res.json();
                 currentData = result.record;
-                // إذا لم تكن العملة موجودة نضع "ريال" كافتراضي
                 document.getElementById('currencyInput').value = currentData.settings?.currency || "ريال";
             } catch (err) { alert("خطأ في الاتصال بالخادم"); }
         }
@@ -51,7 +49,6 @@
             btn.disabled = true;
             btn.innerText = "جاري الحفظ...";
 
-            // تحديث قسم الإعدادات في البيانات
             if (!currentData.settings) currentData.settings = {};
             currentData.settings.currency = newCurrency;
 

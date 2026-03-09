@@ -46,7 +46,6 @@
             margin-top: 20px; 
         }
 
-        /* تصميم الكرت بدون صورة - تركيز على النص */
         .card { 
             background: rgba(15, 15, 15, 0.8);
             border: 2px solid var(--gold); 
@@ -68,7 +67,6 @@
             border-color: #fff;
         }
 
-        /* زخرفة علوية للكرت */
         .card::before {
             content: "RANK";
             position: absolute;
@@ -151,6 +149,9 @@
     <script>
         const BIN_ID = '69ade71aae596e708f6dff7c';
         const MASTER_KEY = '$2a$10$Jf/BiNPPOdt.TS.NNvTT4ulP.k61hphv8OM/8yArTGHP5F.MU/FSq';
+        
+        // --- ضع رابطك هنا ليتم التحويل إليه عند الضغط على الزر ---
+        const MY_PURCHASE_LINK = "https://discord.gg/sEdrrd2TJY"; 
 
         async function loadRanks() {
             try {
@@ -173,7 +174,7 @@
                         <div class="card">
                             <h3>${rank.name}</h3>
                             <div class="price-tag">${rank.price} ريال</div>
-                            <button class="buy-btn" onclick="orderRank('${rank.name}')">امتلكها الآن</button>
+                            <button class="buy-btn" onclick="orderRank()">امتلكها الآن</button>
                         </div>
                     `;
                 });
@@ -182,8 +183,9 @@
             }
         }
 
-        function orderRank(name) {
-            alert("طلب شراء: " + name + "\nيرجى التواصل مع الإدارة عبر الديسكورد لإتمام الدفع.");
+        // الوظيفة المعدلة للتحويل إلى الرابط
+        function orderRank() {
+            window.location.href = MY_PURCHASE_LINK;
         }
 
         window.onload = loadRanks;

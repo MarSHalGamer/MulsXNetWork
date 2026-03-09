@@ -3,24 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر الرتب الملكي</title>
+    <title>متجر الرتب</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* استخلاص الألوان من الشعار بدقة */
-            --logo-red-bright: #ff3e3e; /* اللون الأحمر الفاتح في حرف M */
-            --logo-red-dark: #b80000;   /* اللون الأحمر الغامق في حرف M */
-            --logo-gold: #fcc201;       /* اللون الذهبي في الهلال والسيف */
-            --logo-dark-gold: #c69c3a;  /* لون ذهبي أعمق للحدود */
-            --black-bg: #000000;       /* خلفية سوداء خالصة */
+            --logo-red-bright: #ff3e3e;
+            --logo-red-dark: #b80000;
+            --logo-gold: #fcc201;
+            --black-bg: #000000;
         }
 
         body {
             margin: 0;
             padding: 0;
             font-family: 'Cairo', sans-serif;
-            /* خلفية سوداء خالصة لإبراز ألوان الشعار الصارخة */
-            background-color: var(--black-bg);
+            background: radial-gradient(circle at center, #1a0000 0%, var(--black-bg) 100%);
             color: white;
             display: flex;
             flex-direction: column;
@@ -30,83 +27,83 @@
             overflow: hidden;
         }
 
-        /* حاوية الشعار للتحكم في حجمه وتظهيره */
         .logo-wrapper {
-            margin-bottom: 50px;
-            /* إضافة وهج خفيف خلف الشعار لإبرازه */
-            filter: drop-shadow(0 0 15px rgba(255, 62, 62, 0.3));
+            margin-bottom: 40px;
+            filter: drop-shadow(0 0 20px rgba(255, 62, 62, 0.4));
         }
 
         .logo { 
-            width: 250px; /* حجم الشعار */
+            width: 280px;
             height: auto;
         }
 
-        /* إزالة الحاوية الوسطى وجعل الأزرار عائمة */
-        .btn-group { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 20px; 
-            align-items: center;
-        }
-
-        .btn {
-            padding: 16px 60px;
-            font-size: 1.3em;
+        .btn-buy {
+            padding: 18px 70px;
+            font-size: 1.4em;
             cursor: pointer;
-            border-radius: 50px; /* ازرار بيضاوية عصرية */
-            font-weight: 700;
+            border-radius: 50px;
+            font-weight: 900;
             transition: all 0.4s ease;
             text-decoration: none;
-            width: 220px;
-            text-align: center;
-            box-sizing: border-box; /* لضمان دقة العرض */
-        }
-
-        /* زر شراء الرتب: مستوحى من تدرج اللون الأحمر في حرف M */
-        .btn-buy { 
             background: linear-gradient(45deg, var(--logo-red-dark), var(--logo-red-bright));
             color: #fff; 
-            border: none;
+            border: 2px solid var(--logo-gold);
             text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-            box-shadow: 0 5px 15px rgba(184, 0, 0, 0.4);
+            box-shadow: 0 10px 30px rgba(184, 0, 0, 0.4);
+            text-align: center;
         }
         
         .btn-buy:hover { 
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 8px 25px rgba(255, 62, 62, 0.6);
-            filter: brightness(1.1);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 62, 62, 0.6);
         }
 
-        /* زر خاص بالادمن: شفاف بحدود ذهبية مستوحاة من السيف والهلال */
-        .btn-admin { 
-            background-color: transparent; 
-            color: var(--logo-gold); 
-            border: 3px solid var(--logo-gold); 
+        /* زر الأدمن في الركن السفلي الأيسر */
+        .admin-corner {
+            position: fixed;
+            bottom: 15px;
+            left: 15px;
+            z-index: 10;
         }
 
-        .btn-admin:hover { 
-            background-color: rgba(252, 194, 1, 0.1); /* تأثير خلفية ذهبية خفيفة عند المرور */
-            color: #fff;
-            border-color: #fff;
+        .btn-admin-small { 
+            background: transparent; 
+            color: #333; 
+            border: 1px solid #222; 
+            padding: 5px 12px;
+            font-size: 11px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-family: 'Cairo', sans-serif;
+            transition: 0.3s;
+            opacity: 0.5;
+        }
+
+        .btn-admin-small:hover { 
+            opacity: 1;
+            color: var(--logo-red-bright);
+            border-color: var(--logo-red-bright);
         }
     </style>
 </head>
 <body>
 
     <div class="logo-wrapper">
-        <img src="logo.png" alt="شعار المتجر" class="logo"> 
+        <img src="logo.png" alt="شعار المتجر" class="logo"> 
     </div>
 
     <div class="btn-group">
-        <a href="prices.html" class="btn btn-buy">شراء رتب</a>
-        <button onclick="checkAdmin()" class="btn btn-admin">خاص بالادمنز</button>
+        <a href="prices.html" class="btn-buy">شراء الرتب</a>
+    </div>
+
+    <div class="admin-corner">
+        <button onclick="checkAdmin()" class="btn-admin-small">🔐 الإدارة</button>
     </div>
 
     <script>
         function checkAdmin() {
             let pass = prompt("الرجاء إدخال كلمة السر:");
-            if (pass === "1234") { 
+            if (pass === "r8p9" || pass === "78942") { 
                 window.location.href = "admin.html";
             } else {
                 alert("كلمة سر خاطئة!");

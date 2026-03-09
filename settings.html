@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إعدادات المتجر - 𝐌𝐮𝐥𝐬𝐗</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { background: #000; color: white; font-family: 'Cairo', sans-serif; text-align: center; padding: 50px; }
+        .container { max-width: 400px; margin: auto; background: #111; padding: 30px; border-radius: 20px; border: 2px solid #fcc201; }
+        input { width: 90%; padding: 12px; margin: 20px 0; border-radius: 10px; border: none; text-align: center; font-size: 1.1rem; }
+        button { background: #fcc201; color: black; border: none; padding: 12px 30px; border-radius: 10px; cursor: pointer; font-weight: bold; width: 100%; }
+        button:disabled { background: #555; cursor: not-allowed; }
+        .back { display: block; margin-top: 20px; color: #888; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>⚙️ إعدادات المتجر</h2>
+        <p>تغيير رمز العملة (مثال: ريال، $، درهم)</p>
+        <input type="text" id="currencyInput" placeholder="أدخل رمز العملة">
+        <button id="saveBtn" onclick="saveSettings()">حفظ الإعدادات</button>
+        <a href="admin.html" class="back">⇠ العودة للوحة الإدارة</a>
+    </div>
+
+    <script>
+        const BIN_ID = '69ade71aae596e708f6dff7c';
+        const MASTER_KEY = '$2a$10$Jf/BiNPPOdt.TS.NNvTT4ulP.k61hphv8OM/8yArTGHP5F.MU/FSq';
+        let currentData = {};
+
+        // جلب البيانات الحالية عند فتح الصفحة
+        async function loadSettings() {
+            try {
+                const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+                    headers: { 'X-Master-Key': MASTER_KEY }
+                });
+                const result = await res.json();
+                currentData = result.record;
+                // إذا لم تكن العملة موجودة نضع "ريال" كافتراضي
+                document.getElementById('currencyInput').value = currentData.settings?.currency || "ريال";
+            } catch (err) { alert("خطأ في الاتصال بالخادم"); }
+        }
+
+        async function saveSettings() {
+            const newCurrency = document.getElementById('currencyInput').value;
+            const btn = document.getElementById('saveBtn');
+            
+            if (!newCurrency) return alert("الرجاء إدخال رمز العملة");
+
+            btn.disabled = true;
+            btn.innerText = "جاري الحفظ...";
+
+            // تحديث قسم الإعدادات في البيانات
+            if (!currentData.settings) currentData.settings = {};
+            currentData.settings.currency = newCurrency;
+
+            try {
+                const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Master-Key': MASTER_KEY
+                    },
+                    body: JSON.stringify(currentData)
+                });
+
+                if (res.ok) {
+                    alert("✅ تم حفظ الإعدادات بنجاح!");
+                }
+            } catch (err) {
+                alert("❌ فشل الحفظ");
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "حفظ الإعدادات";
+            }
+        }
+
+        window.onload = loadSettings;
+    </script>
+</body>
+</html>

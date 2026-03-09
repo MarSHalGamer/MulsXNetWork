@@ -158,7 +158,6 @@
                 });
                 const result = await response.json();
                 
-                // جلب العملة من الإعدادات أو استخدام "ريال" كافتراضي
                 const currency = result.record.settings?.currency || "ريال";
                 const ranks = result.record.ranks || [];
                 const grid = document.getElementById('ranksGrid');

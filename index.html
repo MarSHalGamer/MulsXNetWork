@@ -3,110 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر الرتب</title>
+    <title>RP City - الرئيسية</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --logo-red-bright: #ff3e3e;
-            --logo-red-dark: #b80000;
+            --logo-red: #ff3e3e;
             --logo-gold: #fcc201;
-            --black-bg: #000000;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
         }
 
         body {
             margin: 0;
             padding: 0;
             font-family: 'Cairo', sans-serif;
-            background: radial-gradient(circle at center, #1a0000 0%, var(--black-bg) 100%);
+            background: radial-gradient(circle at center, #1a0000 0%, #000 100%);
             color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* --- شريط الأزرار العلوي (نفس الصورة) --- */
+        .navbar {
+            margin-top: 30px;
+            background: rgba(15, 15, 15, 0.6);
+            backdrop-filter: blur(15px);
+            padding: 10px 30px;
+            border-radius: 100px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .navbar a {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 700;
+            transition: 0.3s;
+            padding: 5px 10px;
+        }
+
+        .navbar a:hover {
+            color: var(--logo-gold);
+            text-shadow: 0 0 10px var(--logo-gold);
+        }
+
+        /* --- محتوى المنتصف --- */
+        .main-content {
+            flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            overflow: hidden;
+            text-align: center;
         }
 
         .logo-wrapper {
-            margin-bottom: 40px;
-            filter: drop-shadow(0 0 20px rgba(255, 62, 62, 0.4));
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 30px rgba(255, 62, 62, 0.3));
         }
 
         .logo { 
-            width: 280px;
+            width: 320px; /* حجم الشعار المرفق */
             height: auto;
         }
 
-        .btn-buy {
-            padding: 18px 70px;
-            font-size: 1.4em;
-            cursor: pointer;
-            border-radius: 50px;
+        .welcome-text {
+            font-size: 2.5rem;
             font-weight: 900;
-            transition: all 0.4s ease;
-            text-decoration: none;
-            background: linear-gradient(45deg, var(--logo-red-dark), var(--logo-red-bright));
-            color: #fff; 
-            border: 2px solid var(--logo-gold);
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-            box-shadow: 0 10px 30px rgba(184, 0, 0, 0.4);
-            text-align: center;
-        }
-        
-        .btn-buy:hover { 
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(255, 62, 62, 0.6);
+            margin: 10px 0;
+            background: linear-gradient(to bottom, #fff, #888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        /* زر الأدمن في الركن السفلي الأيسر */
+        .sub-text {
+            color: #888;
+            font-size: 1.1rem;
+            max-width: 500px;
+            line-height: 1.6;
+        }
+
+        /* --- زر الإدارة في الركن --- */
         .admin-corner {
             position: fixed;
             bottom: 15px;
             left: 15px;
-            z-index: 10;
         }
 
         .btn-admin-small { 
             background: transparent; 
-            color: #333; 
-            border: 1px solid #222; 
-            padding: 5px 12px;
-            font-size: 11px;
+            color: #222; 
+            border: 1px solid #111; 
+            padding: 4px 10px;
+            font-size: 10px;
             cursor: pointer;
-            border-radius: 5px;
-            font-family: 'Cairo', sans-serif;
+            border-radius: 4px;
             transition: 0.3s;
-            opacity: 0.5;
         }
 
         .btn-admin-small:hover { 
-            opacity: 1;
-            color: var(--logo-red-bright);
-            border-color: var(--logo-red-bright);
+            color: var(--logo-red);
+            border-color: var(--logo-red);
         }
     </style>
 </head>
 <body>
 
-    <div class="logo-wrapper">
-        <img src="logo.png" alt="شعار المتجر" class="logo"> 
-    </div>
+    <nav class="navbar">
+        <a href="rules.html">القوانين</a>
+        <a href="apply.html">التقديمات</a>
+        <a href="auctions.html">المزادات</a>
+        <a href="sectors.html">القطاعات</a>
+        <a href="prices.html">المتجر</a>
+        <a href="support.html">الدعم الفني</a>
+        <a href="about.html">تعريف</a> <a href="discord-link.html">ربط الديسكورد</a>
+    </nav>
 
-    <div class="btn-group">
-        <a href="prices.html" class="btn-buy">شراء الرتب</a>
+    <div class="main-content">
+        <div class="logo-wrapper">
+            <img src="logo.png" alt="RP City" class="logo"> 
+        </div>
+        
+        <h1 class="welcome-text">مرحباً بك في RP City</h1>
+        <p class="sub-text">
+            عالم الواقعية والإبداع، حيث تبدأ قصتك الخاصة. 
+            استكشف أفضل تجربة لعب في MTA:SA.
+        </p>
     </div>
 
     <div class="admin-corner">
-        <button onclick="checkAdmin()" class="btn-admin-small">🔐 الإدارة</button>
+        <button onclick="checkAdmin()" class="btn-admin-small">🔐 ADMIN</button>
     </div>
 
     <script>
         function checkAdmin() {
-            let pass = prompt("الرجاء إدخال كلمة السر:");
+            let pass = prompt("الرجاء إدخال كلمة السر الخاصة بالإدارة:");
             if (pass === "r8p9" || pass === "78942") { 
                 window.location.href = "admin.html";
             } else {
-                alert("كلمة سر خاطئة!");
+                alert("بيانات الدخول خاطئة!");
             }
         }
     </script>

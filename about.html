@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تعريف - 𝐌𝐮𝐥𝐬𝐗 𝐍𝐞𝐭𝐖𝐨𝐫𝐤</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --logo-red: #ff3e3e;
+            --logo-gold: #fcc201;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+            background: radial-gradient(circle at top, #1a0000 0%, #000 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* حاوية المحتوى */
+        .container {
+            max-width: 900px;
+            width: 90%;
+            margin: 50px 0;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .server-name {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: var(--logo-gold);
+            text-shadow: 0 0 15px rgba(252, 194, 1, 0.3);
+            margin: 10px 0;
+        }
+
+        .badge {
+            background: var(--logo-red);
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        /* الأقسام */
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: var(--glass);
+            border-radius: 15px;
+            border-right: 4px solid var(--logo-red);
+        }
+
+        h2 {
+            color: var(--logo-gold);
+            margin-top: 0;
+            font-size: 1.5rem;
+        }
+
+        p {
+            line-height: 1.8;
+            color: #ccc;
+            font-size: 1.1rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .feature-item {
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: 0.3s;
+        }
+
+        .feature-item:hover {
+            border-color: var(--logo-gold);
+            transform: translateY(-5px);
+        }
+
+        .back-btn {
+            margin-top: 20px;
+            display: inline-block;
+            color: #888;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            color: white;
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 20px;
+            color: #444;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <span class="badge">عالم السيرفايفل المتطور</span>
+            <h1 class="server-name">𝐌𝐮𝐥𝐬𝐗 𝐍𝐞𝐭𝐖𝐨𝐫𝐤</h1>
+        </div>
+
+        <div class="section">
+            <h2>حول السيرفر</h2>
+            <p>
+                مرحباً بكم في <strong>𝐌𝐮𝐥𝐬𝐗 𝐍𝐞𝐭𝐖𝐨𝐫𝐤</strong>، الوجهة الأولى لعشاق الـ Survival في ماين كرافت. نحن لا نقدم مجرد سيرفر عادي، بل نقدم تجربة فريدة تجمع بين البقاء الكلاسيكي والأنظمة المتطورة التي تجعل من مغامرتك أكثر حماساً وواقعية.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>مميزاتنا والبلجنات</h2>
+            <p>
+                يتميز السيرفر بمجموعة واسعة جداً من البلجنات (Plugins) الحصرية التي تم اختيارها وتطويرها بعناية لضمان أفضل أداء وتجربة لعب ممتعة:
+            </p>
+            <div class="features-grid">
+                <div class="feature-item">💎 اقتصاد متوازن</div>
+                <div class="feature-item">🛡️ حماية الأراضي</div>
+                <div class="feature-item">⚔️ نظام رتب متطور</div>
+                <div class="feature-item">🏪 متجر لاعبين</div>
+                <div class="feature-item">🌋 مهمات يومية</div>
+                <div class="feature-item">🔥 مهارات خاصة (Skills)</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>لماذا نحن؟</h2>
+            <p>
+                في 𝐌𝐮𝐥𝐬𝐗 𝐍𝐞𝐭𝐖𝐨𝐫𝐤، نهتم بالمجتمع أولاً. فريق الإدارة متواجد دائماً لضمان بيئة لعب عادلة وخالية من الغش، بالإضافة إلى تحديثات أسبوعية لإضافة محتوى جديد ومميز يبقي الحماس مشتعلاً دائماً.
+            </p>
+        </div>
+
+        <center>
+            <a href="index.html" class="back-btn">← العودة للرئيسية</a>
+        </center>
+    </div>
+
+    <footer>© 2026 𝐌𝐮𝐥𝐬𝐗 𝐍𝐞𝐭𝐖𝐨𝐫𝐤 — All Rights Reserved</footer>
+
+</body>
+</html>
